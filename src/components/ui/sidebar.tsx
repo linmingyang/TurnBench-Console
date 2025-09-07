@@ -1,5 +1,8 @@
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { Slot } from '@radix-ui/react-slot'
+import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'
+import { getGameDetail } from '@/apis/turnbench'
 import { VariantProps, cva } from 'class-variance-authority'
 import { PanelLeftIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -21,6 +24,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { Header } from '@/components/layout/header'
+import { ProfileDropdown } from '@/components/profile-dropdown'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -136,12 +141,25 @@ function SidebarProvider({
             } as React.CSSProperties
           }
           className={cn(
-            'group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
+            'group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-screen w-full flex-col',
             className
           )}
           {...props}
         >
-          {children}
+          <div>
+            <Header>
+              <div className='ml-auto flex items-center space-x-4'>
+                <ProfileDropdown />
+              </div>
+            </Header>
+          </div>
+
+          <div
+            style={{ height: 'calc(100vh - 64px)' }}
+            className='flex flex-row overflow-auto'
+          >
+            {children}
+          </div>
         </div>
       </TooltipProvider>
     </SidebarContext.Provider>
@@ -225,8 +243,11 @@ function Sidebar({
       />
       <div
         data-slot='sidebar-container'
+        style={{
+          height: 'calc(100vh - 64px)',
+        }}
         className={cn(
-          'fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex',
+          'inset-y-0 z-10 hidden w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex',
           side === 'left'
             ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
             : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
@@ -241,7 +262,7 @@ function Sidebar({
         <div
           data-sidebar='sidebar'
           data-slot='sidebar-inner'
-          className='bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm'
+          className='bg-sidebar group-data-[variant=floating]:border-sidebar-border flex w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm'
         >
           {children}
         </div>
@@ -255,25 +276,30 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar()
+  const [showTop, setShowTop] = useState(false)
+  const location = useLocation()
 
-  return (
-    <Button
-      data-sidebar='trigger'
-      data-slot='sidebar-trigger'
-      variant='ghost'
-      size='icon'
-      className={cn('size-7', className)}
-      onClick={(event) => {
-        onClick?.(event)
-        toggleSidebar()
-      }}
-      {...props}
-    >
-      <PanelLeftIcon />
-      <span className='sr-only'>Toggle Sidebar</span>
-    </Button>
-  )
+  useEffect(() => {
+    // 获取当前路由路径
+    const path = location.pathname
+    // 判断是否为 games 路由
+    if (path.startsWith('/games')) {
+      setShowTop(true)
+    } else {
+      setShowTop(false)
+    }
+  }, [location.pathname]) // 依赖项使用 location.pathname
+  const [game_detail, setGameDetails] = React.useState({
+    game_name: 'turnbench',
+  })
+  const game_id = sessionStorage.getItem('gameid')
+
+  if (game_id) {
+    getGameDetail({ id: game_id }).then((res: any) => {
+      setGameDetails(res.data)
+    })
+  }
+  return <>{!showTop && <div>{game_detail.game_name}</div>}</>
 }
 
 function SidebarRail({ className, ...props }: React.ComponentProps<'button'>) {

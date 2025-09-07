@@ -12,15 +12,14 @@ import { Button } from '@/components/ui/button'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { LearnMore } from '@/components/learn-more'
-import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { columns } from '@/features/users/components/users-columns'
-import { UsersDialogs } from '@/features/users/components/users-dialogs'
-import { UsersPrimaryButtons } from '@/features/users/components/users-primary-buttons'
-import { UsersTable } from '@/features/users/components/users-table'
-import UsersProvider from '@/features/users/context/users-context'
-import { userListSchema } from '@/features/users/data/schema'
-import { users } from '@/features/users/data/users'
+import { columns } from '@/features/models/components/columns'
+import { UsersDialogs } from '@/features/models/components/users-dialogs'
+import { UsersPrimaryButtons } from '@/features/models/components/users-primary-buttons'
+import { UsersTable } from '@/features/models/components/users-table'
+import UsersProvider from '@/features/models/context/users-context'
+import { userListSchema } from '@/features/models/data/schema'
+import { users } from '@/features/models/data/users'
 
 export const Route = createFileRoute('/clerk/_authenticated/user-management')({
   component: UserManagement,
@@ -49,7 +48,6 @@ function UserManagement() {
       <SignedIn>
         <UsersProvider>
           <Header fixed>
-            <Search />
             <div className='ml-auto flex items-center space-x-4'>
               <ThemeSwitch />
               <UserButton />
