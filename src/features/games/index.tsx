@@ -32,7 +32,7 @@ export default function Game() {
   }, [])
 
   const playGame = (game: any) => {
-    router.navigate({ to: '/' })
+    router.navigate({ to: '/setups' })
   }
 
   return (

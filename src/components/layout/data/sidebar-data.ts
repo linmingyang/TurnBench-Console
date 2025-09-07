@@ -11,11 +11,6 @@ export const sidebarData: SidebarData = {
       title: 'General',
       items: [
         {
-          title: 'Leaderboard',
-          url: '/',
-
-        },
-        {
           title: 'Providers',
           url: '/providers',
         },
