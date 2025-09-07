@@ -30,7 +30,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='setup_id' />
+      <DataTableColumnHeader column={column} title='dataset_id' />
     ),
     cell: ({ row }) => <div>{row.getValue('id')}</div>,
     enableSorting: false,
@@ -61,9 +61,5 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title='created_at' />
     ),
     cell: ({ row }) => <div className='w-[80px]'>{new Date(row.getValue('created_at')).toLocaleString()}</div>,
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ]

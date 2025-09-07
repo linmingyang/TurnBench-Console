@@ -31,9 +31,9 @@ export default function Providers() {
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2 gap-x-4'>
           <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Sessions</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>History</h2>
             <p className='text-muted-foreground'>
-              Here&apos;s a list of your Sessions!
+              Here&apos;s a list of your History!
             </p>
           </div>
           <TasksPrimaryButtons />

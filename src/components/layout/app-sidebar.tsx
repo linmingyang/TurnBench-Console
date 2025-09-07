@@ -19,7 +19,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const path = location.pathname
     console.log('当前路由路径:', path)
     // 判断是否为 start-game 或 session-detail 路由
-    if (path.startsWith('/start-game') || path.startsWith('/session-detail') || path.startsWith('/games')) {
+    if (path.startsWith('/start-game') || path.startsWith('/session-detail') || path.startsWith('/benchmarks')) {
       setShowSidebar(false)
     } else {
       setShowSidebar(true)
@@ -46,7 +46,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   router.navigate({ to: '/start-game' }) // 替换为你的新页面路由
                 }}
               >
-                Start Game
+                START
               </button>
             </SidebarFooter>
             <SidebarRail />

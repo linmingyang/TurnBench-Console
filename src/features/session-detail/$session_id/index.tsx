@@ -154,7 +154,7 @@ export default function Setups() {
         {/* 左侧两个Label */}
         <div className='flex'>
           <div className='mr-4 flex'>
-            <Label className='mr-1'>Game:</Label>{' '}
+            <Label className='mr-1'>ID:</Label>{' '}
             <div>{session_data?.game_info?.id}</div>
           </div>
           <div className='mr-4 flex'>
@@ -555,7 +555,7 @@ export default function Setups() {
                                   {sessionItem.turn_name === 'proposal' && (
                                     <div className='flex items-center'>
                                       <div className='mr-[8px] whitespace-nowrap'>
-                                        Guess Code:
+                                        Decision:
                                       </div>
                                       <Input
                                         disabled={!sessionItem.canEdit}
@@ -568,7 +568,7 @@ export default function Setups() {
                                   {sessionItem.turn_name === 'question' && (
                                     <div className='flex items-center'>
                                       <div className='mr-[8px] whitespace-nowrap'>
-                                        Verifier Choice:
+                                        Decision:
                                       </div>
                                       <Input
                                         disabled={!sessionItem.canEdit}
@@ -576,7 +576,7 @@ export default function Setups() {
                                         type='text'
                                       />
                                       <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
-                                        Verifier Result:
+                                        Feedback:
                                       </div>
                                       <Input
                                         disabled={!sessionItem.canEdit}
@@ -589,7 +589,7 @@ export default function Setups() {
                                   {sessionItem.turn_name === 'deduce' && (
                                     <div className='flex items-center'>
                                       <div className='mr-[8px] whitespace-nowrap'>
-                                        Choice:
+                                        Decision:
                                       </div>
                                       {sessionItem.deduce_choice_skip && (
                                         <Input
@@ -624,7 +624,7 @@ export default function Setups() {
 
                                       {!sessionItem.deduce_choice_skip && (
                                         <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
-                                          Verifier Result:
+                                          Feedback:
                                         </div>
                                       )}
 
@@ -844,7 +844,7 @@ export default function Setups() {
                               {sessionItem.turn_name === 'proposal' && (
                                 <div className='flex items-center'>
                                   <div className='mr-[8px] whitespace-nowrap'>
-                                    Guess Code:
+                                    Decision:
                                   </div>
                                   <Input
                                     disabled={!sessionItem.canEdit}
@@ -857,7 +857,7 @@ export default function Setups() {
                               {sessionItem.turn_name === 'question' && (
                                 <div className='flex items-center'>
                                   <div className='mr-[8px] whitespace-nowrap'>
-                                    Verifier Choice:
+                                    Decision:
                                   </div>
                                   <Input
                                     disabled={!sessionItem.canEdit}
@@ -865,7 +865,7 @@ export default function Setups() {
                                     type='text'
                                   />
                                   <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
-                                    Verifier Result:
+                                    Feedback:
                                   </div>
                                   <Input
                                     disabled={!sessionItem.canEdit}
@@ -878,7 +878,7 @@ export default function Setups() {
                               {sessionItem.turn_name === 'deduce' && (
                                 <div className='flex items-center'>
                                   <div className='mr-[8px] whitespace-nowrap'>
-                                    Choice:
+                                    Decision:
                                   </div>
                                   {sessionItem.deduce_choice_skip && (
                                     <Input
@@ -913,7 +913,7 @@ export default function Setups() {
 
                                   {!sessionItem.deduce_choice_skip && (
                                     <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
-                                      Verifier Result:
+                                      Feedback:
                                     </div>
                                   )}
 

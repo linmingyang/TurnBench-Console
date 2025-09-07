@@ -30,7 +30,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='session_id' />
+      <DataTableColumnHeader column={column} title='history_id' />
     ),
     cell: ({ row }) => <div>{row.getValue('id')}</div>,
     enableSorting: false,

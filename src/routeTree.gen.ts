@@ -23,13 +23,13 @@ import { Route as authOtpRouteImport } from './routes/(auth)/otp'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
 import { Route as AuthenticatedStartGameIndexRouteImport } from './routes/_authenticated/start-game/index'
-import { Route as AuthenticatedSetupsIndexRouteImport } from './routes/_authenticated/setups/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedProvidersIndexRouteImport } from './routes/_authenticated/providers/index'
 import { Route as AuthenticatedModelsIndexRouteImport } from './routes/_authenticated/models/index'
 import { Route as AuthenticatedHistoryIndexRouteImport } from './routes/_authenticated/history/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
-import { Route as AuthenticatedGamesIndexRouteImport } from './routes/_authenticated/games/index'
+import { Route as AuthenticatedDatasetIndexRouteImport } from './routes/_authenticated/dataset/index'
+import { Route as AuthenticatedBenchmarksIndexRouteImport } from './routes/_authenticated/benchmarks/index'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
 import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
@@ -107,12 +107,6 @@ const AuthenticatedStartGameIndexRoute =
     path: '/start-game/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedSetupsIndexRoute =
-  AuthenticatedSetupsIndexRouteImport.update({
-    id: '/setups/',
-    path: '/setups/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedSettingsIndexRoute =
   AuthenticatedSettingsIndexRouteImport.update({
     id: '/',
@@ -143,11 +137,18 @@ const AuthenticatedHelpCenterIndexRoute =
     path: '/help-center/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedGamesIndexRoute = AuthenticatedGamesIndexRouteImport.update({
-  id: '/games/',
-  path: '/games/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
+const AuthenticatedDatasetIndexRoute =
+  AuthenticatedDatasetIndexRouteImport.update({
+    id: '/dataset/',
+    path: '/dataset/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedBenchmarksIndexRoute =
+  AuthenticatedBenchmarksIndexRouteImport.update({
+    id: '/benchmarks/',
+    path: '/benchmarks/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSettingsNotificationsRoute =
   AuthenticatedSettingsNotificationsRouteImport.update({
     id: '/notifications',
@@ -196,13 +197,13 @@ export interface FileRoutesByFullPath {
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/games': typeof AuthenticatedGamesIndexRoute
+  '/benchmarks': typeof AuthenticatedBenchmarksIndexRoute
+  '/dataset': typeof AuthenticatedDatasetIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/history': typeof AuthenticatedHistoryIndexRoute
   '/models': typeof AuthenticatedModelsIndexRoute
   '/providers': typeof AuthenticatedProvidersIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/setups': typeof AuthenticatedSetupsIndexRoute
   '/start-game': typeof AuthenticatedStartGameIndexRoute
   '/session-detail/$session_id': typeof AuthenticatedSessionDetailSession_idIndexRoute
 }
@@ -222,13 +223,13 @@ export interface FileRoutesByTo {
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/games': typeof AuthenticatedGamesIndexRoute
+  '/benchmarks': typeof AuthenticatedBenchmarksIndexRoute
+  '/dataset': typeof AuthenticatedDatasetIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/history': typeof AuthenticatedHistoryIndexRoute
   '/models': typeof AuthenticatedModelsIndexRoute
   '/providers': typeof AuthenticatedProvidersIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
-  '/setups': typeof AuthenticatedSetupsIndexRoute
   '/start-game': typeof AuthenticatedStartGameIndexRoute
   '/session-detail/$session_id': typeof AuthenticatedSessionDetailSession_idIndexRoute
 }
@@ -251,13 +252,13 @@ export interface FileRoutesById {
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/_authenticated/games/': typeof AuthenticatedGamesIndexRoute
+  '/_authenticated/benchmarks/': typeof AuthenticatedBenchmarksIndexRoute
+  '/_authenticated/dataset/': typeof AuthenticatedDatasetIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/_authenticated/history/': typeof AuthenticatedHistoryIndexRoute
   '/_authenticated/models/': typeof AuthenticatedModelsIndexRoute
   '/_authenticated/providers/': typeof AuthenticatedProvidersIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/_authenticated/setups/': typeof AuthenticatedSetupsIndexRoute
   '/_authenticated/start-game/': typeof AuthenticatedStartGameIndexRoute
   '/_authenticated/session-detail/$session_id/': typeof AuthenticatedSessionDetailSession_idIndexRoute
 }
@@ -280,13 +281,13 @@ export interface FileRouteTypes {
     | '/settings/appearance'
     | '/settings/display'
     | '/settings/notifications'
-    | '/games'
+    | '/benchmarks'
+    | '/dataset'
     | '/help-center'
     | '/history'
     | '/models'
     | '/providers'
     | '/settings/'
-    | '/setups'
     | '/start-game'
     | '/session-detail/$session_id'
   fileRoutesByTo: FileRoutesByTo
@@ -306,13 +307,13 @@ export interface FileRouteTypes {
     | '/settings/appearance'
     | '/settings/display'
     | '/settings/notifications'
-    | '/games'
+    | '/benchmarks'
+    | '/dataset'
     | '/help-center'
     | '/history'
     | '/models'
     | '/providers'
     | '/settings'
-    | '/setups'
     | '/start-game'
     | '/session-detail/$session_id'
   id:
@@ -334,13 +335,13 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/display'
     | '/_authenticated/settings/notifications'
-    | '/_authenticated/games/'
+    | '/_authenticated/benchmarks/'
+    | '/_authenticated/dataset/'
     | '/_authenticated/help-center/'
     | '/_authenticated/history/'
     | '/_authenticated/models/'
     | '/_authenticated/providers/'
     | '/_authenticated/settings/'
-    | '/_authenticated/setups/'
     | '/_authenticated/start-game/'
     | '/_authenticated/session-detail/$session_id/'
   fileRoutesById: FileRoutesById
@@ -459,13 +460,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStartGameIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/setups/': {
-      id: '/_authenticated/setups/'
-      path: '/setups'
-      fullPath: '/setups'
-      preLoaderRoute: typeof AuthenticatedSetupsIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/settings/': {
       id: '/_authenticated/settings/'
       path: '/'
@@ -501,11 +495,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedHelpCenterIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/games/': {
-      id: '/_authenticated/games/'
-      path: '/games'
-      fullPath: '/games'
-      preLoaderRoute: typeof AuthenticatedGamesIndexRouteImport
+    '/_authenticated/dataset/': {
+      id: '/_authenticated/dataset/'
+      path: '/dataset'
+      fullPath: '/dataset'
+      preLoaderRoute: typeof AuthenticatedDatasetIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/benchmarks/': {
+      id: '/_authenticated/benchmarks/'
+      path: '/benchmarks'
+      fullPath: '/benchmarks'
+      preLoaderRoute: typeof AuthenticatedBenchmarksIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/settings/notifications': {
@@ -572,12 +573,12 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedGamesIndexRoute: typeof AuthenticatedGamesIndexRoute
+  AuthenticatedBenchmarksIndexRoute: typeof AuthenticatedBenchmarksIndexRoute
+  AuthenticatedDatasetIndexRoute: typeof AuthenticatedDatasetIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
   AuthenticatedHistoryIndexRoute: typeof AuthenticatedHistoryIndexRoute
   AuthenticatedModelsIndexRoute: typeof AuthenticatedModelsIndexRoute
   AuthenticatedProvidersIndexRoute: typeof AuthenticatedProvidersIndexRoute
-  AuthenticatedSetupsIndexRoute: typeof AuthenticatedSetupsIndexRoute
   AuthenticatedStartGameIndexRoute: typeof AuthenticatedStartGameIndexRoute
   AuthenticatedSessionDetailSession_idIndexRoute: typeof AuthenticatedSessionDetailSession_idIndexRoute
 }
@@ -585,12 +586,12 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedGamesIndexRoute: AuthenticatedGamesIndexRoute,
+  AuthenticatedBenchmarksIndexRoute: AuthenticatedBenchmarksIndexRoute,
+  AuthenticatedDatasetIndexRoute: AuthenticatedDatasetIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
   AuthenticatedHistoryIndexRoute: AuthenticatedHistoryIndexRoute,
   AuthenticatedModelsIndexRoute: AuthenticatedModelsIndexRoute,
   AuthenticatedProvidersIndexRoute: AuthenticatedProvidersIndexRoute,
-  AuthenticatedSetupsIndexRoute: AuthenticatedSetupsIndexRoute,
   AuthenticatedStartGameIndexRoute: AuthenticatedStartGameIndexRoute,
   AuthenticatedSessionDetailSession_idIndexRoute:
     AuthenticatedSessionDetailSession_idIndexRoute,

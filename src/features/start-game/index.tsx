@@ -61,7 +61,7 @@ export default function Setups() {
 
   return (
     <div className='flex min-h-[60vh] flex-col items-center justify-center space-y-6'>
-      <div className=''>Game Setting</div>
+      <div className=''>Evaluation Setting</div>
       <div className='flex'>
         <Label className='mr-4'>Model:</Label>
         <Popover open={openModel} onOpenChange={setOpenModel}>
@@ -115,7 +115,7 @@ export default function Setups() {
       </div>
 
       <div className='flex'>
-        <Label className='mr-4'>SetUp:</Label>
+        <Label className='mr-4'>Data:</Label>
         <Popover open={openSetUp} onOpenChange={setOpenSetUp}>
           <PopoverTrigger asChild>
             <Button
@@ -126,7 +126,7 @@ export default function Setups() {
             >
               {selectSetUp
                 ? setUps.find((setup) => setup.id === selectSetUp)?.id
-                : 'Select setup...'}
+                : 'Select Data...'}
               <ChevronsUpDownIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
           </PopoverTrigger>
@@ -162,7 +162,7 @@ export default function Setups() {
       </div>
 
       <div className='flex'>
-        <Label className='mr-4'>Game Mode:</Label>
+        <Label className='mr-4'>Evaluation Mode:</Label>
         <RadioGroup className='flex' defaultValue={selectMode} onValueChange={setSelectMode} orientation='horizontal'>
           <div className='flex items-center gap-3'>
             <RadioGroupItem value='classic' id='r1' />

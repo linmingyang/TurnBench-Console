@@ -20,8 +20,8 @@ export const sidebarData: SidebarData = {
           url: '/models',
         },
         {
-          title: 'Setups',
-          url: '/setups',
+          title: 'Dataset',
+          url: '/dataset',
         },
         {
           title: 'History',

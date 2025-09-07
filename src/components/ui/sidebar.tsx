@@ -283,7 +283,7 @@ function SidebarTrigger({
     // 获取当前路由路径
     const path = location.pathname
     // 判断是否为 games 路由
-    if (path.startsWith('/games')) {
+    if (path.startsWith('/benchmarks')) {
       setShowTop(true)
     } else {
       setShowTop(false)

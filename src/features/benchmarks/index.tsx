@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Main } from '@/components/layout/main'
 
-export default function Game() {
+export default function Benchmarks() {
   const router = useRouter()
   const [gamesData, setGamesData] = useState<
     {
@@ -32,7 +32,7 @@ export default function Game() {
   }, [])
 
   const playGame = (game: any) => {
-    router.navigate({ to: '/setups' })
+    router.navigate({ to: '/dataset' })
   }
 
   return (
@@ -41,9 +41,9 @@ export default function Game() {
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2 gap-x-4'>
           <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Games</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>Benchmarks</h2>
             <p className='text-muted-foreground'>
-              Here&apos;s a list of your Games!
+              Here&apos;s a list of your Benchmarks!
             </p>
           </div>
         </div>

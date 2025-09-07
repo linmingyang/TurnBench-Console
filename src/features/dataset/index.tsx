@@ -12,7 +12,7 @@ import { TasksDialogs } from './components/tasks-dialogs'
 import { TasksPrimaryButtons } from './components/tasks-primary-buttons'
 import TasksProvider from './context/tasks-context'
 
-export default function Providers() {
+export default function Dataset() {
   const [setupsData, setSetUpsData] = useState<
     { id: string; display_name: string; created_at: string, [key: string]: any }[]
   >([])
@@ -32,9 +32,9 @@ export default function Providers() {
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2 gap-x-4'>
           <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Setups</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>Dataset</h2>
             <p className='text-muted-foreground'>
-              Here&apos;s a list of your Setups!
+              Here&apos;s a list of your Dataset!
             </p>
           </div>
           <TasksPrimaryButtons />
