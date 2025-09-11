@@ -1,7 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -30,7 +29,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='dataset_id' />
+      <DataTableColumnHeader column={column} title='data_id' />
     ),
     cell: ({ row }) => <div>{row.getValue('id')}</div>,
     enableSorting: false,

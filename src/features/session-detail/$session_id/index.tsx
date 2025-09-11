@@ -171,13 +171,7 @@ export default function Setups() {
         </div>
         {/* 右侧两个Label和一个按钮 */}
         <div className='flex flex-col items-end space-y-4'>
-          <Button
-            onClick={() => {
-              
-            }}
-          >
-            Exit Game
-          </Button>
+          <Button onClick={() => {}}>Exit Game</Button>
         </div>
       </div>
       {/* 下方四块区域 */}
@@ -268,13 +262,14 @@ export default function Setups() {
           <div className='ml-4 flex flex-1 justify-between rounded border p-4'>
             <Tabs
               defaultValue={localSessionData?.[0]?.model_name}
+              className='relative'
               style={{
                 width: onShowComparison ? '48%' : '99%',
                 height: 'calc(100vh - 300px)',
                 overflowY: 'auto',
               }}
             >
-              <div className='justify-between flex items-center'>
+              <div className='flex items-center justify-between'>
                 <TabsList>
                   {localSessionData.map((session: any, index: number) => (
                     <TabsTrigger
@@ -368,329 +363,342 @@ export default function Setups() {
               </div>
 
               {localSessionData.map((session: any, index: number) => (
-                <TabsContent value={session?.model_name}>
-                  {onShowLeftDT && (
-                    <>
-                      <div style={{ width: '100%', height: '100%' }}>
-                        <ReactFlow
-                          nodes={leftNodes}
-                          edges={leftEdges}
-                          onNodesChange={onNodesChange}
-                          onEdgesChange={onEdgesChange}
-                          onConnect={onConnect}
-                          fitView
-                        >
-                          <Controls />
-                          <MiniMap />
-                          <Background gap={12} size={1} />
-                        </ReactFlow>
-                      </div>
-                    </>
-                  )}
-                  {!onShowLeftDT && (
-                    <>
-                      {session.data.map(
-                        (sessionItem: any, itemIndex: number) => (
-                          <div className='mt-[8px] w-full border shadow-sm'>
-                            <div className='flex items-center justify-between'>
-                              <div className='items-center text-black'>
-                                Turn {sessionItem.turn_num} Round{' '}
-                                {sessionItem.round_num} -{' '}
-                                {sessionItem.turn_name}
-                              </div>
-                              <div className='flex items-center'>
-                                <Dialog>
-                                  <form>
-                              <DialogTrigger asChild>
-                                    <Button
-                                      className='ml-[8px]'
-                                      variant='outline'
-                                      onClick={() => {
-                                        const currentData = sessionItem.turn_prompt;
-                                        setCurrentEditText(currentData)
-                                      }}
-                                    >
-                                      Step Prompt
-                                    </Button>
-                                  </DialogTrigger>
-                                  <DialogContent className='sm:max-w-[600px]'>
-                                    <DialogHeader>
-                                      <DialogTitle>Prompt</DialogTitle>
-                                      <DialogDescription>
-                                        <Textarea
-                                          className='sm:max-h-[400px]'
-                                          defaultValue={sessionItem.turn_prompt}
-                                          onChange={(e) => {
-                                            setCurrentEditText(e.target.value)
-                                          }}
-                                        />
-                                      </DialogDescription>
-                                    </DialogHeader>
-                                    <DialogFooter>
-                                      <DialogClose>
+                <>
+                  <TabsContent value={session?.model_name} className='w-full overflow-auto'>
+                    {onShowLeftDT && (
+                      <>
+                        <div style={{ width: '100%', height: '100%' }}>
+                          <ReactFlow
+                            nodes={leftNodes}
+                            edges={leftEdges}
+                            onNodesChange={onNodesChange}
+                            onEdgesChange={onEdgesChange}
+                            onConnect={onConnect}
+                            fitView
+                          >
+                            <Controls />
+                            <MiniMap />
+                            <Background gap={12} size={1} />
+                          </ReactFlow>
+                        </div>
+                      </>
+                    )}
+                    {!onShowLeftDT && (
+                      <>
+                        {session.data.map(
+                          (sessionItem: any, itemIndex: number) => (
+                            <div className='mt-[8px] w-full border shadow-sm'>
+                              <div className='flex items-center justify-between'>
+                                <div className='items-center text-black'>
+                                  Turn {sessionItem.turn_num} Round{' '}
+                                  {sessionItem.round_num} -{' '}
+                                  {sessionItem.turn_name}
+                                </div>
+                                <div className='flex items-center'>
+                                  <Dialog>
+                                    <form>
+                                      <DialogTrigger asChild>
                                         <Button
-                                          type='submit'
+                                          className='ml-[8px]'
+                                          variant='outline'
                                           onClick={() => {
-                                            //更新session
+                                            const currentData =
+                                              sessionItem.turn_prompt
+                                            setCurrentEditText(currentData)
+                                          }}
+                                        >
+                                          Step Prompt
+                                        </Button>
+                                      </DialogTrigger>
+                                      <DialogContent className='sm:max-w-[600px]'>
+                                        <DialogHeader>
+                                          <DialogTitle>Prompt</DialogTitle>
+                                          <DialogDescription>
+                                            <Textarea
+                                              className='sm:max-h-[400px]'
+                                              defaultValue={
+                                                sessionItem.turn_prompt
+                                              }
+                                              onChange={(e) => {
+                                                setCurrentEditText(
+                                                  e.target.value
+                                                )
+                                              }}
+                                            />
+                                          </DialogDescription>
+                                        </DialogHeader>
+                                        <DialogFooter>
+                                          <DialogClose>
+                                            <Button
+                                              type='submit'
+                                              onClick={() => {
+                                                //更新session
+                                              }}
+                                            >
+                                              Save
+                                            </Button>
+                                          </DialogClose>
+                                          <DialogClose asChild>
+                                            <Button>Cancel</Button>
+                                          </DialogClose>
+                                        </DialogFooter>
+                                      </DialogContent>
+                                    </form>
+                                  </Dialog>
+
+                                  <Button
+                                    className='ml-4'
+                                    variant='outline'
+                                    onClick={() => {
+                                      const sessionData_cur =
+                                        localSessionData.map((model: any) => {
+                                          return { ...model }
+                                        })
+                                      sessionData_cur[index].data[
+                                        itemIndex
+                                      ].showAll =
+                                        !sessionData_cur[index].data[itemIndex]
+                                          .showAll
+                                      setLocalSessionData(sessionData_cur)
+                                    }}
+                                  >
+                                    Expand
+                                  </Button>
+                                </div>
+                              </div>
+
+                              {sessionItem.showAll && (
+                                <div className='p-[5px]'>
+                                  <div className='flex items-center justify-between'>
+                                    <div>Reasoning:</div>
+                                    {!sessionItem.canEdit && (
+                                      <div>
+                                        {sessionItem.turn_name === 'Deduce' && (
+                                          <Button variant='outline'>
+                                            Evaluation
+                                          </Button>
+                                        )}
+
+                                        <Button
+                                          className='ml-[8px]'
+                                          variant='outline'
+                                          onClick={() => {
+                                            const sessionData_cur =
+                                              localSessionData.map(
+                                                (model: any) => {
+                                                  return { ...model }
+                                                }
+                                              )
+                                            sessionData_cur[index].data[
+                                              itemIndex
+                                            ].canEdit = true
+                                            setLocalSessionData(sessionData_cur)
+                                            setCurrentEditText(
+                                              sessionData_cur[index]
+                                            )
+                                          }}
+                                        >
+                                          Edit
+                                        </Button>
+                                      </div>
+                                    )}
+
+                                    {sessionItem.canEdit && (
+                                      <div>
+                                        <Button
+                                          variant='outline'
+                                          onClick={() => {
+                                            setShowHoverCard(!showHoverCard)
+                                            const sessionItemData = {
+                                              sessionItem: {
+                                                ...sessionItem,
+                                                canEdit: false,
+                                              },
+                                              session_id: session.session_id,
+                                            }
+                                            setCurChangeData(sessionItemData)
                                           }}
                                         >
                                           Save
                                         </Button>
-                                      </DialogClose>
-                                      <DialogClose asChild>
-                                        <Button>Cancel</Button>
-                                      </DialogClose>
-                                    </DialogFooter>
-                                  </DialogContent>
-                                  </form>
-                                  
-                                </Dialog>
-
-                                <Button
-                                  className='ml-4'
-                                  variant='outline'
-                                  onClick={() => {
-                                    const sessionData_cur =
-                                      localSessionData.map((model: any) => {
-                                        return { ...model }
-                                      })
-                                    sessionData_cur[index].data[
-                                      itemIndex
-                                    ].showAll =
-                                      !sessionData_cur[index].data[itemIndex]
-                                        .showAll
-                                    setLocalSessionData(sessionData_cur)
-                                  }}
-                                >
-                                  Expand
-                                </Button>
-                              </div>
-                            </div>
-
-                            {sessionItem.showAll && (
-                              <div className='p-[5px]'>
-                                <div className='flex items-center justify-between'>
-                                  <div>Reasoning:</div>
-                                  {!sessionItem.canEdit && (
-                                    <div>
-                                      {sessionItem.turn_name === 'Deduce' && (
-                                        <Button variant='outline'>
-                                          Evaluation
+                                        <Button
+                                          variant='outline'
+                                          className='ml-[8px]'
+                                          onClick={() => {
+                                            const sessionData_cur =
+                                              localSessionData.map(
+                                                (model: any) => {
+                                                  return { ...model }
+                                                }
+                                              )
+                                              console.log('88888', sessionData_cur[index].data[itemIndex])
+                                            sessionData_cur[index].data[
+                                              itemIndex
+                                            ].canEdit = false
+                                            setLocalSessionData(sessionData_cur)
+                                          }}
+                                        >
+                                          Cancel
                                         </Button>
-                                      )}
-
-                                      <Button
-                                        className='ml-[8px]'
-                                        variant='outline'
-                                        onClick={() => {
-                                          const sessionData_cur =
-                                            localSessionData.map(
-                                              (model: any) => {
-                                                return { ...model }
-                                              }
-                                            )
-                                          sessionData_cur[index].data[
-                                            itemIndex
-                                          ].canEdit = true
-                                          setLocalSessionData(sessionData_cur)
-                                          setCurrentEditText(sessionData_cur[index])
-                                        }}
-                                      >
-                                        Edit
-                                      </Button>
-                                    </div>
-                                  )}
-
-                                  {sessionItem.canEdit && (
-                                    <div>
-                                      <Button
-                                        variant='outline'
-                                        onClick={() => {
-                                          setShowHoverCard(!showHoverCard)
-                                          const sessionItemData = {
-                                            sessionItem: {
-                                              ...sessionItem,
-                                              canEdit: false,
-                                            },
-                                            session_id: session.session_id,
-                                          }
-                                          setCurChangeData(sessionItemData)
-                                        }}
-                                      >
-                                        Save
-                                      </Button>
-                                      <Button
-                                        variant='outline'
-                                        className='ml-[8px]'
-                                        onClick={() => {
-                                          const sessionData_cur =
-                                            localSessionData.map(
-                                              (model: any) => {
-                                                return { ...model }
-                                              }
-                                            )
-                                          sessionData_cur[index].data[
-                                            itemIndex
-                                          ].canEdit = false
-                                          setLocalSessionData(sessionData_cur)
-                                        }}
-                                      >
-                                        Cancel
-                                      </Button>
-                                    </div>
-                                  )}
-                                </div>
-                                <div className='content-mid'>
-                                  <Textarea
-                                    defaultValue={sessionItem.turn_reasoning}
-                                    disabled={!sessionItem.canEdit}
-                                    onChange={(e) => {
-                                      const currentData = {...currentEditText}
-                                      currentData.data[itemIndex].turn_reasoning = e.target.value
-                                      setCurrentEditText(currentData)
-                                    }}
-                                  />
-                                </div>
-                                <div className='content-bottom'>
-                                  {sessionItem.turn_name === 'proposal' && (
-                                    <div className='flex items-center'>
-                                      <div className='mr-[8px] whitespace-nowrap'>
-                                        Decision:
                                       </div>
-                                      <Input
-                                        disabled={!sessionItem.canEdit}
-                                        value={sessionItem.guess_code}
-                                        type='text'
-                                      />
-                                    </div>
-                                  )}
-
-                                  {sessionItem.turn_name === 'question' && (
-                                    <div className='flex items-center'>
-                                      <div className='mr-[8px] whitespace-nowrap'>
-                                        Decision:
-                                      </div>
-                                      <Input
-                                        disabled={!sessionItem.canEdit}
-                                        value={sessionItem.verifier_choice}
-                                        type='text'
-                                      />
-                                      <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
-                                        Feedback:
-                                      </div>
-                                      <Input
-                                        disabled={!sessionItem.canEdit}
-                                        value={sessionItem.verifier_result}
-                                        type='text'
-                                      />
-                                    </div>
-                                  )}
-
-                                  {sessionItem.turn_name === 'deduce' && (
-                                    <div className='flex items-center'>
-                                      <div className='mr-[8px] whitespace-nowrap'>
-                                        Decision:
-                                      </div>
-                                      {sessionItem.deduce_choice_skip && (
-                                        <Input
-                                          disabled
-                                          value='continue'
-                                          type='text'
-                                        />
-                                      )}
-                                      {!sessionItem.deduce_choice_skip && (
-                                        <Input
-                                          disabled
-                                          value='Submit'
-                                          type='text'
-                                        />
-                                      )}
-
-                                      {!sessionItem.deduce_choice_skip && (
-                                        <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
-                                          Verifier Code:
+                                    )}
+                                  </div>
+                                  <div className='content-mid'>
+                                    <Textarea
+                                      defaultValue={sessionItem.turn_reasoning}
+                                      disabled={!sessionItem.canEdit}
+                                      onChange={(e) => {
+                                        const currentData = {
+                                          ...currentEditText,
+                                        }
+                                        currentData.data[
+                                          itemIndex
+                                        ].turn_reasoning = e.target.value
+                                        setCurrentEditText(currentData)
+                                      }}
+                                    />
+                                  </div>
+                                  <div className='content-bottom'>
+                                    {sessionItem.turn_name === 'proposal' && (
+                                      <div className='flex items-center'>
+                                        <div className='mr-[8px] whitespace-nowrap'>
+                                          Decision:
                                         </div>
-                                      )}
-
-                                      {!sessionItem.deduce_choice_skip && (
                                         <Input
-                                          disabled
-                                          value={
-                                            sessionItem.deduce_choice_submit_code
-                                          }
+                                          disabled={!sessionItem.canEdit}
+                                          value={sessionItem.guess_code}
                                           type='text'
                                         />
-                                      )}
+                                      </div>
+                                    )}
 
-                                      {!sessionItem.deduce_choice_skip && (
+                                    {sessionItem.turn_name === 'question' && (
+                                      <div className='flex items-center'>
+                                        <div className='mr-[8px] whitespace-nowrap'>
+                                          Decision:
+                                        </div>
+                                        <Input
+                                          disabled={!sessionItem.canEdit}
+                                          value={sessionItem.verifier_choice}
+                                          type='text'
+                                        />
                                         <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
                                           Feedback:
                                         </div>
-                                      )}
-
-                                      {!sessionItem.deduce_choice_skip && (
                                         <Input
-                                          disabled
-                                          value={
-                                            sessionItem.game_success
-                                              ? 'WIN'
-                                              : 'FAIL'
-                                          }
+                                          disabled={!sessionItem.canEdit}
+                                          value={sessionItem.verifier_result}
                                           type='text'
                                         />
-                                      )}
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        )
-                      )}
+                                      </div>
+                                    )}
 
-                      <div className='mt-4 flex justify-end'>
-                        {onShowContinueBtn(session) && !session?.isLoading && (
-                          <Button
-                            variant='outline'
-                            onClick={() => {
-                              const index = localSessionData.findIndex(
-                                (item: any) =>
-                                  item.session_id === session.session_id
-                              )
-                              const sessionData_cur = localSessionData.map(
-                                (model: any) => {
-                                  return { ...model }
-                                }
-                              )
-                              sessionData_cur[index].isLoading = true
-                              setLocalSessionData(sessionData_cur)
-                              playTurn(session.session_id, {}).then(
-                                (res: any) => {
-                                  const nextPromptData = { ...res.data.data }
-                                  nextPromptData['showAll'] = true
-                                  nextPromptData['canEdit'] = false
-                                  const sessionData_new = [...sessionData_cur]
-                                  sessionData_new[index].data.push(
-                                    nextPromptData
-                                  )
-                                  sessionData_new[index].isLoading = false
-                                  setLocalSessionData(sessionData_new)
-                                }
-                              )
-                            }}
-                          >
-                            Continue
-                          </Button>
+                                    {sessionItem.turn_name === 'deduce' && (
+                                      <div className='flex items-center'>
+                                        <div className='mr-[8px] whitespace-nowrap'>
+                                          Decision:
+                                        </div>
+                                        {sessionItem.deduce_choice_skip && (
+                                          <Input
+                                            disabled
+                                            value='continue'
+                                            type='text'
+                                          />
+                                        )}
+                                        {!sessionItem.deduce_choice_skip && (
+                                          <Input
+                                            disabled
+                                            value='Submit'
+                                            type='text'
+                                          />
+                                        )}
+
+                                        {!sessionItem.deduce_choice_skip && (
+                                          <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
+                                            Verifier Code:
+                                          </div>
+                                        )}
+
+                                        {!sessionItem.deduce_choice_skip && (
+                                          <Input
+                                            disabled
+                                            value={
+                                              sessionItem.deduce_choice_submit_code
+                                            }
+                                            type='text'
+                                          />
+                                        )}
+
+                                        {!sessionItem.deduce_choice_skip && (
+                                          <div className='mr-[8px] ml-[24px] whitespace-nowrap'>
+                                            Feedback:
+                                          </div>
+                                        )}
+
+                                        {!sessionItem.deduce_choice_skip && (
+                                          <Input
+                                            disabled
+                                            value={
+                                              sessionItem.game_success
+                                                ? 'WIN'
+                                                : 'FAIL'
+                                            }
+                                            type='text'
+                                          />
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )
                         )}
-                        {onShowContinueBtn(session) && session.isLoading && (
-                          <Button disabled variant='outline'>
-                            Loading
-                          </Button>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </TabsContent>
+                      </>
+                    )}
+                  </TabsContent>
+                    <div className='h-[36px]'></div>
+                  <div
+                    className='absolute bottom-0 bg-white right-0 flex justify-end w-full'
+                  >
+                    {onShowContinueBtn(session) && !session?.isLoading && (
+                      <Button
+                        variant='outline'
+                        onClick={() => {
+                          const index = localSessionData.findIndex(
+                            (item: any) =>
+                              item.session_id === session.session_id
+                          )
+                          const sessionData_cur = localSessionData.map(
+                            (model: any) => {
+                              return { ...model }
+                            }
+                          )
+                          sessionData_cur[index].isLoading = true
+                          setLocalSessionData(sessionData_cur)
+                          playTurn(session.session_id, {}).then((res: any) => {
+                            const nextPromptData = {
+                              ...res.data.data,
+                            }
+                            nextPromptData['showAll'] = true
+                            nextPromptData['canEdit'] = false
+                            const sessionData_new = [...sessionData_cur]
+                            sessionData_new[index].data.push(nextPromptData)
+                            sessionData_new[index].isLoading = false
+                            setLocalSessionData(sessionData_new)
+                          })
+                        }}
+                      >
+                        Continue
+                      </Button>
+                    )}
+                    {onShowContinueBtn(session) && session.isLoading && (
+                      <Button disabled variant='outline'>
+                        Loading
+                      </Button>
+                    )}
+                  </div>
+                </>
               ))}
             </Tabs>
 
@@ -1003,7 +1011,6 @@ export default function Setups() {
                     curChangeData.session_id,
                     curChangeData.sessionItem
                   ).then((res: any) => {
-                    console.log('88888888', res.data.data)
                     toast('', {
                       description: 'Edit Success',
                     })
@@ -1048,9 +1055,7 @@ export default function Setups() {
                                       key={model.display_name}
                                       value={model.display_name}
                                       onSelect={(currentValue) => {
-                                        setSelectModel(
-                                          model
-                                        )
+                                        setSelectModel(model)
                                         setOpenModel(false)
                                       }}
                                     >
@@ -1079,18 +1084,21 @@ export default function Setups() {
                       <Button
                         type='submit'
                         onClick={() => {
-                          console.log('88888', selectModel)
                           copySession(
                             curChangeData.session_id,
                             selectModel.id,
                             curChangeData.sessionItem
                           ).then((res: any) => {
                             const newSessionId = res.data.data
-                            getSessionDetail(newSessionId).then((res: any) => {
+                            getSessionDetail(curChangeData.session_id).then((res: any) => {
                               const sessionData = res.data.data
+                              const originData = [...localSessionData]
+                              originData[0].data.map((item: any, index: any) => {
+                                item['turn_prompt'] = sessionData.turn_result_history[index].turn_prompt
+                                item['turn_reasoning'] = sessionData.turn_result_history[index].turn_reasoning
+                              })
                               let nameSet = new Set()
-
-                              localSessionData.map((item: any) => {
+                              originData.map((item: any) => {
                                 nameSet.add(item.model_nickname)
                               })
                               const llm_id = selectModel.id
@@ -1102,9 +1110,11 @@ export default function Setups() {
                                 ) {
                                   index++
                                 }
-                                const newName = nameSet.has(originName)? originName + 'copy' + index : originName
+                                const newName = nameSet.has(originName)
+                                  ? originName + 'copy' + index
+                                  : originName
                                 const localSessionDataNew = [
-                                  ...localSessionData,
+                                  ...originData,
                                 ]
 
                                 getSessionDetailTurnhistory(newSessionId).then(

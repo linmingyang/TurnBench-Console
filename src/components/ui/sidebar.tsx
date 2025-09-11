@@ -156,7 +156,7 @@ function SidebarProvider({
 
           <div
             style={{ height: 'calc(100vh - 64px)' }}
-            className='flex flex-row overflow-auto'
+            className='flex flex-row overflow-hidden'
           >
             {children}
           </div>

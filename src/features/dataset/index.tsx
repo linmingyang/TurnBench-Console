@@ -34,7 +34,7 @@ export default function Dataset() {
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>Dataset</h2>
             <p className='text-muted-foreground'>
-              Here&apos;s a list of your Dataset!
+              Here&apos;s a list of your Data!
             </p>
           </div>
           <TasksPrimaryButtons />

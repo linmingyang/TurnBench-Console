@@ -30,8 +30,8 @@ export default function Setups() {
   const [openSetUp, setOpenSetUp] = useState(false)
   const [openModel, setOpenModel] = useState(false)
   const [selectModel, setSelectModel] = useState({
-    id: '',    
-    display_name: ''
+    id: '',
+    display_name: '',
   })
   const [selectSetUp, setSelectSetUp] = useState('')
   const [selectMode, setSelectMode] = useState('classic')
@@ -50,19 +50,23 @@ export default function Setups() {
       mode: selectMode,
       llm_id: selectModel.id,
       setup_id: selectSetUp,
-      max_rounds: 99
+      max_rounds: 99,
     }
     // 创建 session 并跳转
     createSession(params).then((res: any) => {
       const sessionId = res.data.data.id
-      router.navigate({ to: '/session-detail/$session_id', params: { session_id: sessionId } })
+      router.navigate({
+        to: '/session-detail/$session_id',
+        params: { session_id: sessionId },
+      })
     })
   }
+
 
   return (
     <div className='flex min-h-[60vh] flex-col items-center justify-center space-y-6'>
       <div className=''>Evaluation Setting</div>
-      <div className='flex'>
+      <div className='flex w-[500px]'>
         <Label className='mr-4'>Model:</Label>
         <Popover open={openModel} onOpenChange={setOpenModel}>
           <PopoverTrigger asChild>
@@ -70,7 +74,7 @@ export default function Setups() {
               variant='outline'
               role='combobox'
               aria-expanded={openModel}
-              className='justify-between'
+              className='justify-between ml-[72px] w-[366px]'
             >
               {selectModel.display_name
                 ? selectModel.display_name
@@ -78,7 +82,7 @@ export default function Setups() {
               <ChevronsUpDownIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className=' p-0'>
+          <PopoverContent className='p-0 w-[366px]'>
             <Command>
               <CommandInput placeholder='Search model...' />
               <CommandList>
@@ -89,10 +93,14 @@ export default function Setups() {
                       key={model.display_name}
                       value={model.display_name}
                       onSelect={(currentValue) => {
-                        setSelectModel(currentValue === selectModel.display_name ? {
-                          id: '',
-                          display_name: ''
-                        } : model)
+                        setSelectModel(
+                          currentValue === selectModel.display_name
+                            ? {
+                                id: '',
+                                display_name: '',
+                              }
+                            : model
+                        )
                         setOpenModel(false)
                       }}
                     >
@@ -114,7 +122,7 @@ export default function Setups() {
         </Popover>
       </div>
 
-      <div className='flex'>
+      <div className='flex w-[500px]'>
         <Label className='mr-4'>Data:</Label>
         <Popover open={openSetUp} onOpenChange={setOpenSetUp}>
           <PopoverTrigger asChild>
@@ -122,7 +130,7 @@ export default function Setups() {
               variant='outline'
               role='combobox'
               aria-expanded={openSetUp}
-              className=' justify-between'
+              className='justify-between ml-[82px] w-[366px]'
             >
               {selectSetUp
                 ? setUps.find((setup) => setup.id === selectSetUp)?.id
@@ -130,7 +138,7 @@ export default function Setups() {
               <ChevronsUpDownIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className=' p-0'>
+          <PopoverContent className='p-0 w-[366px]'>
             <Command>
               <CommandInput placeholder='Search setup...' />
               <CommandList>
@@ -141,7 +149,9 @@ export default function Setups() {
                       key={setup.id}
                       value={setup.id}
                       onSelect={(currentValue) => {
-                        setSelectSetUp(currentValue === selectSetUp ? '' : currentValue)
+                        setSelectSetUp(
+                          currentValue === selectSetUp ? '' : currentValue
+                        )
                         setOpenSetUp(false)
                       }}
                     >
@@ -161,9 +171,14 @@ export default function Setups() {
         </Popover>
       </div>
 
-      <div className='flex'>
+      <div className='flex w-[500px]'>
         <Label className='mr-4'>Evaluation Mode:</Label>
-        <RadioGroup className='flex' defaultValue={selectMode} onValueChange={setSelectMode} orientation='horizontal'>
+        <RadioGroup
+          className='flex justify-between'
+          defaultValue={selectMode}
+          onValueChange={setSelectMode}
+          orientation='horizontal'
+        >
           <div className='flex items-center gap-3'>
             <RadioGroupItem value='classic' id='r1' />
             <Label htmlFor='r1'>classic</Label>
@@ -175,9 +190,16 @@ export default function Setups() {
         </RadioGroup>
       </div>
 
-      <Button className='space-x-1' onClick={() => handleStart()}>
-        <span>Continue</span>
-      </Button>
+      <div className='flex w-[500px] justify-between '>
+        <Button className='space-x-1' onClick={() => {
+          history.back()
+        }}>
+          <span>Back</span>
+        </Button>
+        <Button className='space-x-1' onClick={() => handleStart()}>
+          <span>Continue</span>
+        </Button>
+      </div>
     </div>
   )
 }
