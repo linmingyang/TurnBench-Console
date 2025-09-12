@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { createModel, getProviders, updateModel } from '@/apis/turnbench'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -10,6 +12,13 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import {
   Sheet,
   SheetClose,
   SheetContent,
@@ -17,7 +26,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
-import { createModel, updateModel } from '@/apis/turnbench'
 
 interface Props {
   open: boolean
@@ -32,24 +40,42 @@ export function TasksMutateDrawer({ open, onOpenChange, currentRow }: Props) {
     defaultValues: currentRow ?? {
       display_name: '',
       base_url: '',
-      api_key: '',
+      provider_id: '',
       max_concurrent: 1,
       description: '',
     },
   })
 
+  const [providersData, setProvidersData] = useState<
+    {
+      id: string
+      display_name: string
+      created_at: string
+      [key: string]: any
+    }[]
+  >([])
+  const [providerParams, setProviderParams] = useState<{
+    page: number
+    page_size: number
+  }>({
+    page: 1,
+    page_size: 100,
+  })
+
+  useEffect(() => {
+    getProviders(providerParams).then((res: any) => {
+      setProvidersData(res.data.data)
+    })
+  }, [])
+
   const onSubmit = (data: any) => {
     onOpenChange(false)
     form.reset()
     if (!isUpdate) {
-      createModel(data).then(() => {
-        
-      })
+      createModel(data).then(() => {})
     } else {
       const { id, ...modelParams } = data
-      updateModel(id, modelParams).then(() => {
-
-      })
+      updateModel(id, modelParams).then(() => {})
     }
   }
 
@@ -144,7 +170,10 @@ export function TasksMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                 <FormItem className='space-y-1'>
                   <FormLabel>max_completion_tokens</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder='Enter a max_completion_tokens' />
+                    <Input
+                      {...field}
+                      placeholder='Enter a max_completion_tokens'
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -190,19 +219,37 @@ export function TasksMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                 </FormItem>
               )}
             />
-            {!isUpdate && (<FormField
-              control={form.control}
-              name='api_key'
-              render={({ field }) => (
-                <FormItem className='space-y-1'>
-                  <FormLabel>api_key</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder='Enter a api_key' />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />)}
+            {!isUpdate && (
+              <FormField
+                control={form.control}
+                name='provider_id'
+                render={({ field }) => (
+                  <FormItem className='w-full space-y-1'>
+                    <FormLabel>provider</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder='Select a provider' />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {providersData.map((item: any) => (
+                            <SelectItem key={item.id} value={item.id}>
+                              {item.display_name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
               name='description'
@@ -216,7 +263,6 @@ export function TasksMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                 </FormItem>
               )}
             />
-            
           </form>
         </Form>
         <SheetFooter className='gap-2'>
