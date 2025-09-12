@@ -32,6 +32,7 @@ export default function Benchmarks() {
   }, [])
 
   const playGame = (game: any) => {
+    sessionStorage.setItem('gameid', game.id)
     router.navigate({ to: '/dataset' })
   }
 

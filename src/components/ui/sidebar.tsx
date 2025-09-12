@@ -1,13 +1,21 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { Slot } from '@radix-ui/react-slot'
-import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'
-import { getGameDetail } from '@/apis/turnbench'
+import { useLocation } from '@tanstack/react-router'
+import { useRouter } from '@tanstack/react-router'
+import { getGameDetail, getGames } from '@/apis/turnbench'
 import { VariantProps, cva } from 'class-variance-authority'
-import { PanelLeftIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -26,6 +34,14 @@ import {
 } from '@/components/ui/tooltip'
 import { Header } from '@/components/layout/header'
 import { ProfileDropdown } from '@/components/profile-dropdown'
+import {
+  BadgeCheck,
+  Bell,
+  ChevronsUpDown,
+  CreditCard,
+  LogOut,
+  Sparkles,
+} from 'lucide-react'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -278,28 +294,60 @@ function SidebarTrigger({
 }: React.ComponentProps<typeof Button>) {
   const [showTop, setShowTop] = useState(false)
   const location = useLocation()
+  const [game_detail, setGameDetails] = React.useState({
+    game_name: 'turnbench',
+  })
+
+  const [games, setGames] = useState<any>([])
+  const router = useRouter()
 
   useEffect(() => {
-    // 获取当前路由路径
     const path = location.pathname
-    // 判断是否为 games 路由
     if (path.startsWith('/benchmarks')) {
       setShowTop(true)
     } else {
       setShowTop(false)
     }
-  }, [location.pathname]) // 依赖项使用 location.pathname
-  const [game_detail, setGameDetails] = React.useState({
-    game_name: 'turnbench',
-  })
-  const game_id = sessionStorage.getItem('gameid')
-
-  if (game_id) {
-    getGameDetail({ id: game_id }).then((res: any) => {
-      setGameDetails(res.data)
+    getGames({ page: 1, page_size: 100 }).then((res: any) => {
+      setGames(res.data.data)
     })
-  }
-  return <>{!showTop && <div>{game_detail.game_name}</div>}</>
+    const game_id = sessionStorage.getItem('gameid')
+    if (game_id) {
+      getGameDetail(game_id).then((res: any) => {
+        setGameDetails(res.data)
+      })
+    }
+  }, [location.pathname])
+
+  return (
+    <>
+      {!showTop && (
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div className='flex justify-center items-center'>
+              <span className='bg-muted flex block w-[24px] w-[24px] items-center justify-center rounded-[6px] font-semibold'>{game_detail.game_name[0].toUpperCase()}</span>
+              <span className='ml-2'>{game_detail.game_name}</span>
+              <ChevronsUpDown className='ml-2 size-4' />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {games.map((item: any) => (
+              <DropdownMenuItem
+                onClick={() => {
+                  sessionStorage.setItem('gameid', item.id)
+                  router.navigate({
+                    to: '/dataset',
+                  })
+                }}
+              >
+                {item.game_name}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
+    </>
+  )
 }
 
 function SidebarRail({ className, ...props }: React.ComponentProps<'button'>) {
