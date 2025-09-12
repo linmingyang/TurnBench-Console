@@ -73,6 +73,9 @@ export default function Setups() {
 
   const [leftNodes, setLeftNodes] = useState<any>([])
   const [leftEdges, setLeftEdges] = useState<any>([])
+
+  const [rightNodes, setRightNodes] = useState<any>([])
+  const [rightEdges, setRightEdges] = useState<any>([])
   const onNodesChange = useCallback(
     (changes: any) =>
       setLeftNodes((nodesSnapshot: any) =>
@@ -745,7 +748,7 @@ export default function Setups() {
                       value={session?.model_name}
                       onClick={() => {
                         const selectSession = { ...onSelectSession }
-                        selectSession.left = index
+                        selectSession.right = index
                         setOnSelectSession(selectSession)
                       }}
                     >
@@ -756,12 +759,12 @@ export default function Setups() {
                 <div className='flex items-center'>
                   <Switch
                     className='mr-2'
-                    checked={onShowLeftDT}
+                    checked={onShowRightDT}
                     onCheckedChange={() => {
-                      setOnShowLeftDT(!onShowLeftDT)
-                      if (!onShowLeftDT) {
+                      setOnShowRightDT(!onShowRightDT)
+                      if (!onShowRightDT) {
                         const session_id =
-                          localSessionData[onSelectSession.left].session_id
+                          localSessionData[onSelectSession.right].session_id
                         getSessionDetailTurnhistory(session_id).then(
                           (hisres: any) => {
                             const sessionHistory = hisres.data.data.map(
@@ -773,9 +776,11 @@ export default function Setups() {
                                 return itemNew
                               }
                             )
+                            console.log('77777', localSessionData)
+                            console.log('77777', onSelectSession)
                             getDependencies({
                               llm_id:
-                                localSessionData[onSelectSession.left].llm_id,
+                                localSessionData[onSelectSession.right].llm_id,
                               reasoning_history: sessionHistory,
                             }).then((res: any) => {
                               const nodes: {
@@ -819,8 +824,8 @@ export default function Setups() {
                                   }
                                 }
                               )
-                              setLeftNodes(nodes)
-                              setLeftEdges(edges)
+                              setRightNodes(nodes)
+                              setRightEdges(edges)
                             })
                           }
                         )
@@ -838,12 +843,12 @@ export default function Setups() {
                     className='w-full overflow-auto flex-none'
                     style={{ height: 'calc(100% - 90px)' }}
                   >
-                    {onShowLeftDT && (
+                    {onShowRightDT && (
                       <>
                         <div style={{ width: '100%', height: '100%' }}>
                           <ReactFlow
-                            nodes={leftNodes}
-                            edges={leftEdges}
+                            nodes={rightNodes}
+                            edges={rightEdges}
                             onNodesChange={onNodesChange}
                             onEdgesChange={onEdgesChange}
                             onConnect={onConnect}
@@ -856,7 +861,7 @@ export default function Setups() {
                         </div>
                       </>
                     )}
-                    {!onShowLeftDT && (
+                    {!onShowRightDT && (
                       <>
                         {session.data.map(
                           (sessionItem: any, itemIndex: number) => (
@@ -1360,6 +1365,7 @@ export default function Setups() {
                                       session_id: newSessionId,
                                       model_name: newName,
                                       model_nick_name: newName,
+                                      llm_id: llm_id,
                                       isLoading: false,
                                       data: sessionTurnData,
                                     }
