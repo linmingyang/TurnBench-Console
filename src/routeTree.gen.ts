@@ -15,7 +15,6 @@ import { Route as AuthenticatedStartGameIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedProvidersIndexRouteImport } from './routes/_authenticated/providers/index'
 import { Route as AuthenticatedModelsIndexRouteImport } from './routes/_authenticated/models/index'
 import { Route as AuthenticatedHistoryIndexRouteImport } from './routes/_authenticated/history/index'
-import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
 import { Route as AuthenticatedDatasetIndexRouteImport } from './routes/_authenticated/dataset/index'
 import { Route as AuthenticatedBenchmarksIndexRouteImport } from './routes/_authenticated/benchmarks/index'
 import { Route as AuthenticatedSessionDetailSession_idIndexRouteImport } from './routes/_authenticated/session-detail/$session_id/index'
@@ -53,12 +52,6 @@ const AuthenticatedHistoryIndexRoute =
     path: '/history/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedHelpCenterIndexRoute =
-  AuthenticatedHelpCenterIndexRouteImport.update({
-    id: '/help-center/',
-    path: '/help-center/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedDatasetIndexRoute =
   AuthenticatedDatasetIndexRouteImport.update({
     id: '/dataset/',
@@ -82,7 +75,6 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/benchmarks': typeof AuthenticatedBenchmarksIndexRoute
   '/dataset': typeof AuthenticatedDatasetIndexRoute
-  '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/history': typeof AuthenticatedHistoryIndexRoute
   '/models': typeof AuthenticatedModelsIndexRoute
   '/providers': typeof AuthenticatedProvidersIndexRoute
@@ -93,7 +85,6 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/benchmarks': typeof AuthenticatedBenchmarksIndexRoute
   '/dataset': typeof AuthenticatedDatasetIndexRoute
-  '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/history': typeof AuthenticatedHistoryIndexRoute
   '/models': typeof AuthenticatedModelsIndexRoute
   '/providers': typeof AuthenticatedProvidersIndexRoute
@@ -106,7 +97,6 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/benchmarks/': typeof AuthenticatedBenchmarksIndexRoute
   '/_authenticated/dataset/': typeof AuthenticatedDatasetIndexRoute
-  '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/_authenticated/history/': typeof AuthenticatedHistoryIndexRoute
   '/_authenticated/models/': typeof AuthenticatedModelsIndexRoute
   '/_authenticated/providers/': typeof AuthenticatedProvidersIndexRoute
@@ -119,7 +109,6 @@ export interface FileRouteTypes {
     | '/'
     | '/benchmarks'
     | '/dataset'
-    | '/help-center'
     | '/history'
     | '/models'
     | '/providers'
@@ -130,7 +119,6 @@ export interface FileRouteTypes {
     | '/'
     | '/benchmarks'
     | '/dataset'
-    | '/help-center'
     | '/history'
     | '/models'
     | '/providers'
@@ -142,7 +130,6 @@ export interface FileRouteTypes {
     | '/_authenticated/'
     | '/_authenticated/benchmarks/'
     | '/_authenticated/dataset/'
-    | '/_authenticated/help-center/'
     | '/_authenticated/history/'
     | '/_authenticated/models/'
     | '/_authenticated/providers/'
@@ -198,13 +185,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedHistoryIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/help-center/': {
-      id: '/_authenticated/help-center/'
-      path: '/help-center'
-      fullPath: '/help-center'
-      preLoaderRoute: typeof AuthenticatedHelpCenterIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/dataset/': {
       id: '/_authenticated/dataset/'
       path: '/dataset'
@@ -233,7 +213,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedBenchmarksIndexRoute: typeof AuthenticatedBenchmarksIndexRoute
   AuthenticatedDatasetIndexRoute: typeof AuthenticatedDatasetIndexRoute
-  AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
   AuthenticatedHistoryIndexRoute: typeof AuthenticatedHistoryIndexRoute
   AuthenticatedModelsIndexRoute: typeof AuthenticatedModelsIndexRoute
   AuthenticatedProvidersIndexRoute: typeof AuthenticatedProvidersIndexRoute
@@ -245,7 +224,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedBenchmarksIndexRoute: AuthenticatedBenchmarksIndexRoute,
   AuthenticatedDatasetIndexRoute: AuthenticatedDatasetIndexRoute,
-  AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
   AuthenticatedHistoryIndexRoute: AuthenticatedHistoryIndexRoute,
   AuthenticatedModelsIndexRoute: AuthenticatedModelsIndexRoute,
   AuthenticatedProvidersIndexRoute: AuthenticatedProvidersIndexRoute,

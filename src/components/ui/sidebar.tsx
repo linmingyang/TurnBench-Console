@@ -33,7 +33,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { Header } from '@/components/layout/header'
-import { ProfileDropdown } from '@/components/profile-dropdown'
 import {
   BadgeCheck,
   Bell,
@@ -165,7 +164,6 @@ function SidebarProvider({
           <div>
             <Header>
               <div className='ml-auto flex items-center space-x-4'>
-                <ProfileDropdown />
               </div>
             </Header>
           </div>
