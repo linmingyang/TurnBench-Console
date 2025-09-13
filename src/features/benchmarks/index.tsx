@@ -38,7 +38,6 @@ export default function Benchmarks() {
 
   return (
     <>
-      {/* ===== Main ===== */}
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2 gap-x-4'>
           <div>
@@ -56,9 +55,6 @@ export default function Benchmarks() {
                   <CardTitle className='text-base font-medium'>
                     {game.display_name}
                   </CardTitle>
-                  {/* <Button className='size-8' onClick={() => playGame(game)}>
-                    <span>Play</span>
-                  </Button> */}
                   <Button
                     variant='secondary'
                     size='icon'
