@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useTasks } from '../context/tasks-context'
 import { useRouter } from '@tanstack/react-router'
 
 interface DataTableRowActionsProps<TData> {
@@ -19,9 +18,6 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const task = row.original
   const router = useRouter()
-
-  const { setOpen, setCurrentRow } = useTasks()
-
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -36,7 +32,6 @@ export function DataTableRowActions<TData>({
       <DropdownMenuContent align='end' className='w-[160px]'>
         <DropdownMenuItem
           onClick={() => {
-            setCurrentRow(task)
             router.navigate({ to: '/session-detail/$session_id', params: { session_id: task?.id } })
           }}
         >

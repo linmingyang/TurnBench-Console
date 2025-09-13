@@ -232,7 +232,7 @@ export function TasksMutateDrawer({ open, onOpenChange, currentRow }: Props) {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className='w-full'>
                             <SelectValue placeholder='Select a provider' />
                           </SelectTrigger>
                         </FormControl>
