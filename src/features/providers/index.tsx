@@ -26,8 +26,6 @@ export default function Providers() {
 
   return (
     <TasksProvider>
-      
-
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2 gap-x-4'>
           <div>
