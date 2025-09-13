@@ -65,8 +65,8 @@ export default function Setups() {
   const [onShowLeftDT, setOnShowLeftDT] = useState(false)
   const [onShowRightDT, setOnShowRightDT] = useState(false)
   const [onSelectSession, setOnSelectSession] = useState({
-    left: -1,
-    right: -1,
+    left: 0,
+    right: 0,
   })
 
   const [currentEditText, setCurrentEditText] = useState<any>()
@@ -146,8 +146,14 @@ export default function Setups() {
     return nightmare_verifier_ids.findIndex((item: any) => item === verifier_id)
   }
 
-  const onShowContinueBtn = (sessionData: any) => {
-    return sessionData.data.findIndex((item: any) => item.is_game_over) === -1
+  const onShowLeftContinueBtn = () => {
+    const index = onSelectSession.left
+    return localSessionData[index].data.findIndex((item: any) => item.is_game_over) === -1
+  }
+
+  const onShowRightContinueBtn = () => {
+    const index = onSelectSession.right
+    return localSessionData[index].data.findIndex((item: any) => item.is_game_over) === -1
   }
 
   return (
@@ -690,14 +696,11 @@ export default function Setups() {
                   </TabsContent>
                   
                   <div className='absolute right-0 bottom-0 flex w-full justify-end bg-white'>
-                    {onShowContinueBtn(session) && !session?.isLoading && (
+                    {onShowLeftContinueBtn() && !localSessionData[onSelectSession.left]?.isLoading && (
                       <Button
                         variant='outline'
                         onClick={() => {
-                          const index = localSessionData.findIndex(
-                            (item: any) =>
-                              item.session_id === session.session_id
-                          )
+                          const index = onSelectSession.left
                           const sessionData_cur = localSessionData.map(
                             (model: any) => {
                               return { ...model }
@@ -705,7 +708,7 @@ export default function Setups() {
                           )
                           sessionData_cur[index].isLoading = true
                           setLocalSessionData(sessionData_cur)
-                          playTurn(session.session_id, {}).then((res: any) => {
+                          playTurn(localSessionData[index].session_id, {}).then((res: any) => {
                             const nextPromptData = {
                               ...res.data.data,
                             }
@@ -721,7 +724,7 @@ export default function Setups() {
                         Continue
                       </Button>
                     )}
-                    {onShowContinueBtn(session) && session.isLoading && (
+                    {onShowLeftContinueBtn() && localSessionData[onSelectSession.left].isLoading && (
                       <Button disabled variant='outline'>
                         Loading
                       </Button>
@@ -1150,7 +1153,7 @@ export default function Setups() {
                     )}
                   </TabsContent>
                   <div className='absolute right-0 bottom-0 flex w-full justify-end bg-white'>
-                    {onShowContinueBtn(session) && !session?.isLoading && (
+                    {onShowRightContinueBtn() && !localSessionData[onSelectSession.right]?.isLoading && (
                       <Button
                         variant='outline'
                         onClick={() => {
@@ -1181,7 +1184,7 @@ export default function Setups() {
                         Continue
                       </Button>
                     )}
-                    {onShowContinueBtn(session) && session.isLoading && (
+                    {onShowRightContinueBtn() && localSessionData[onSelectSession.right]?.isLoading && (
                       <Button disabled variant='outline'>
                         Loading
                       </Button>
