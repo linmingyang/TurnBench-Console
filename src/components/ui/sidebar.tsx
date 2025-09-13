@@ -163,7 +163,7 @@ function SidebarProvider({
         >
           <div>
             <Header>
-              <div className='ml-auto flex items-center space-x-4'>
+              <div className='flex items-start space-x-4'>
               </div>
             </Header>
           </div>

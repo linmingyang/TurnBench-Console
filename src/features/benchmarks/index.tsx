@@ -39,6 +39,7 @@ export default function Benchmarks() {
   return (
     <>
       <Main>
+        <div className='absolute top-[16px] text-[24px] font-semibold'>VISTA</div>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2 gap-x-4'>
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>Benchmarks</h2>
